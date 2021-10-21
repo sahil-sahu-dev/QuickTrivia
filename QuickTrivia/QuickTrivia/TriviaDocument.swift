@@ -11,46 +11,51 @@ class TriviaQuestionsGame: ObservableObject {
     
     @Published var triviaGame: TriviaGame
     
-    var trivias: Array<Trivia> {
+    var trivias: Array<Result> {
         triviaGame.trivias
     }
     
-    func loadData() {
-        TriviaData.loadData()
+    
+    public func loadData() {
+
+        guard let url = URL(string: "https://opentdb.com/api.php?amount=1") else{
+            print("Error creating url object")
+            return
+        }
+            
+
+        let request = URLRequest(url: url)
+            
+        URLSession.shared.dataTask(with: request) { data, response, error in
+                
+            if let data = data {
+                if let decodedResponse = try? JSONDecoder().decode(Response.self, from: data) {
+                    // we have good data – go back to the main thread
+                    DispatchQueue.main.async { [self] in
+                            
+                        triviaGame.trivias = decodedResponse.results
+                        print(triviaGame.trivias)
+
+                    }
+                        
+                    return
+                }
+            }
+
+            // if we're still here it means there was a problem
+            print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
+                
+        }.resume()
+            
     }
+    
     
     init() {
         
-        triviaGame = TriviaQuestionsGame.createTriviaGame()
+        triviaGame = TriviaGame()
+        loadData()
     }
     
-    
-    private static func createTriviaGame() -> TriviaGame {
-        
-
-        let trivia = extractData(fromData: TriviaData.getData())
-        
-        return TriviaGame(numberOfQuestions: trivia.count) { index in
-            return trivia[index]
-        }
-    }
-    
-    private static func extractData(fromData triviaData: [Result]) -> [Trivia] {
-        
-        var extractedData = [Trivia]()
-        
-        for index in 0..<triviaData.count {
-            
-            extractedData.append(
-                Trivia(id: index,
-                       category: triviaData[index].category,
-                       question: triviaData[index].question,
-                       answer: triviaData[index].correct_answer,
-                       difficulty: triviaData[index].difficulty))
-        }
-        
-        return extractedData
-    }
     
 
 }

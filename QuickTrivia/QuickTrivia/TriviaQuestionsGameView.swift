@@ -16,17 +16,23 @@ struct TriviaQuestionsGameView: View {
     
     var body: some View {
         
-        List(trivia.trivias){ item in
+        NavigationView{
+        
+        List(trivia.trivias, id: \.self){ item in
             VStack{
                 Text("Question: " + item.question)
-                lineSpacing(1)
-                Text("Answer: " + item.answer)
-                lineSpacing(1)
+                Spacer()
+                Text("Answer: " + item.correct_answer)
+                Spacer()
                 Text("Category: " + item.category)
                
             }
         }
-        .onAppear(perform: trivia.loadData)
+            
+        .navigationBarTitle("QuickTrivia")
+        
+    }
+        
     }
     
     

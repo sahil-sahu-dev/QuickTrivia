@@ -7,26 +7,28 @@
 
 import Foundation
 
-struct Trivia: Identifiable, Codable {
+
+struct Result: Codable, Hashable {
     
-    var id: Int
     var category: String
     var question: String
-    var answer: String
+    var correct_answer: String
     var difficulty: String
     
 }
 
+struct Response: Codable {
+    
+    var results: [Result]
+}
+
+
+
 struct TriviaGame {
     
-    var trivias = [Trivia]()
+    var trivias = [Result]()
     
-    init(numberOfQuestions: Int, triviaFactory: (Int) -> Trivia ) {
-        
-        for index in 0..<numberOfQuestions {
-            trivias.append(triviaFactory(index))
-        }
-    }
+    
     
 }
 
