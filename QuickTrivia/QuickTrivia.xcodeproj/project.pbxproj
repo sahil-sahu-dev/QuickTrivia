@@ -13,7 +13,6 @@
 		B2B3E0DB272184FB003B1C0B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2B3E0DA272184FB003B1C0B /* Preview Assets.xcassets */; };
 		B2B3E0E327218514003B1C0B /* Trivia.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B3E0E227218514003B1C0B /* Trivia.swift */; };
 		B2B3E0E5272185EC003B1C0B /* TriviaDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B3E0E4272185EC003B1C0B /* TriviaDocument.swift */; };
-		B2B3E0E727218B52003B1C0B /* TriviaDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B3E0E627218B52003B1C0B /* TriviaDB.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +24,6 @@
 		B2B3E0DC272184FB003B1C0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2B3E0E227218514003B1C0B /* Trivia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trivia.swift; sourceTree = "<group>"; };
 		B2B3E0E4272185EC003B1C0B /* TriviaDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaDocument.swift; sourceTree = "<group>"; };
-		B2B3E0E627218B52003B1C0B /* TriviaDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaDB.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +60,6 @@
 				B2B3E0D5272184F8003B1C0B /* TriviaQuestionsGameView.swift */,
 				B2B3E0E227218514003B1C0B /* Trivia.swift */,
 				B2B3E0E4272185EC003B1C0B /* TriviaDocument.swift */,
-				B2B3E0E627218B52003B1C0B /* TriviaDB.swift */,
 				B2B3E0D7272184FB003B1C0B /* Assets.xcassets */,
 				B2B3E0DC272184FB003B1C0B /* Info.plist */,
 				B2B3E0D9272184FB003B1C0B /* Preview Content */,
@@ -151,7 +148,6 @@
 				B2B3E0E5272185EC003B1C0B /* TriviaDocument.swift in Sources */,
 				B2B3E0E327218514003B1C0B /* Trivia.swift in Sources */,
 				B2B3E0D4272184F8003B1C0B /* QuickTriviaApp.swift in Sources */,
-				B2B3E0E727218B52003B1C0B /* TriviaDB.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

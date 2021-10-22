@@ -13,7 +13,7 @@ struct QuickTriviaApp: App {
     var body: some Scene {
 
         WindowGroup {
-            TriviaQuestionsGameView(trivia: TriviaQuestionsGame())
+            TriviaQuestionsGameView(triviaDocument: TriviaQuestionsGame())
         }
     }
 }

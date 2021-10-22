@@ -12,34 +12,46 @@ import SwiftUI
 struct TriviaQuestionsGameView: View {
     
     
-    @ObservedObject var trivia: TriviaQuestionsGame
+    @ObservedObject var triviaDocument: TriviaQuestionsGame
+    
     
     var body: some View {
         
         NavigationView{
         
-        List(trivia.trivias, id: \.self){ item in
-            VStack{
-                Text("Question: " + item.question)
-                Spacer()
-                Text("Answer: " + item.correct_answer)
-                Spacer()
-                Text("Category: " + item.category)
+            List(triviaDocument.trivias){ item in
+            
+                VStack{
+                    Text("Question: " + item.question)
+                    Spacer()
+                    Text("Category: " + item.category)
+                    showAnswerOptions(for: item)
+                    Spacer()
+                    Text("Answer: " + item.correct_answer)
                
             }
         }
-            
+                
         .navigationBarTitle("QuickTrivia")
         
     }
         
+}
+    
+    @ViewBuilder
+    func showAnswerOptions(for item: Trivia) -> some View{
+
+        ForEach(item.answerOptions, id: \.self) { question in
+            Text(question)
+        }
     }
+  
     
     
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        TriviaQuestionsGameView(trivia: TriviaQuestionsGame())
+        TriviaQuestionsGameView(triviaDocument: TriviaQuestionsGame())
     }
 }

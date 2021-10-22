@@ -11,14 +11,16 @@ class TriviaQuestionsGame: ObservableObject {
     
     @Published var triviaGame: TriviaGame
     
-    var trivias: Array<Result> {
+    var trivias: Array<Trivia> {
         triviaGame.trivias
     }
     
     
+        
+    
     public func loadData() {
 
-        guard let url = URL(string: "https://opentdb.com/api.php?amount=1") else{
+        guard let url = URL(string: "https://opentdb.com/api.php?amount=10&category=9") else{
             print("Error creating url object")
             return
         }
@@ -33,7 +35,7 @@ class TriviaQuestionsGame: ObservableObject {
                     // we have good data – go back to the main thread
                     DispatchQueue.main.async { [self] in
                             
-                        triviaGame.trivias = decodedResponse.results
+                        triviaGame.triviaData = decodedResponse.results
                         print(triviaGame.trivias)
 
                     }
@@ -56,6 +58,8 @@ class TriviaQuestionsGame: ObservableObject {
         loadData()
     }
     
+    
+   
     
 
 }
