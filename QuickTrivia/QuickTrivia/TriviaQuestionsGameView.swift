@@ -13,31 +13,18 @@ struct TriviaQuestionsGameView: View {
     
     @ObservedObject var triviaDocument: TriviaQuestionsGame
     var questionIndex: Int = 0
+    var pinkColor:Color = Color(red: 255/255.0,green: 156/255.0, blue: 156/255.0)
+    var greenColor: Color = Color(red: 168/255.0, green: 237/255.0, blue: 219/255.0)
     
     var body: some View {
-                
-                ZStack{
-                    
-                    VStack{
-                     Text("Question")
-                        withAnimation{
-                            question
-                                .padding()
-                                .foregroundColor(.white)
-                                .font(.headline)
-                        }
-                        
-                        Text("Answer")
-                        if(triviaDocument.trivias.count > questionIndex){
-                            answers
-                                .padding()
-                                .foregroundColor(.white)
-                                .font(.headline)
-                        }
-                    }
-                    
-                    
-                }
+
+        VStack{
+    
+            Text(questionIndex < triviaDocument.trivias.count ? triviaDocument.trivias[questionIndex].question : "").offset(y: -150)
+            blackLine.offset(y: -100)
+            answers
+        }
+            
         
     }
     
@@ -48,29 +35,43 @@ struct TriviaQuestionsGameView: View {
                 
             }
         
-        
         return Text("")
     }
     
-//    var blueRectangle: some View {
-//
-//
-//    }
+    var blackLine: some View {
+        Rectangle()
+            .stroke(lineWidth: 5)
+            .frame(width:500, height: 1)
+            .foregroundColor(.black)
+
+    }
     
-    var answers: some View {
-        
-        
-        return VStack{
-            Text(triviaDocument.trivias[questionIndex].answerOptions[0])
-            Text(triviaDocument.trivias[questionIndex].answerOptions[1])
-                    
-            if(triviaDocument.trivias[questionIndex].answerOptions.count == 4){
-                Text(triviaDocument.trivias[questionIndex].answerOptions[2])
-                Text(triviaDocument.trivias[questionIndex].answerOptions[3])
+    var answers: some View
+    {
+        LazyVGrid(columns: [GridItem(.fixed(400))],spacing: 10){
+            if(triviaDocument.trivias.count > questionIndex){
+                ForEach(triviaDocument.trivias[questionIndex].answerOptions, id: \.self){answer in
+                    ZStack{
+                        option
+                            .foregroundColor(answer.elementsEqual(triviaDocument.trivias[questionIndex].correct_answer) ? greenColor : pinkColor)
+                        
+                        Text(answer).foregroundColor(.black)
+                    }
+                }
             }
+            //option
         }
+    }
+    
+    
+    var option: some View {
+        
+        RoundedRectangle(cornerRadius: 15)
+            .frame(width: 350, height: 70)
+           
         
     }
+    
         
     
 }

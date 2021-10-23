@@ -9,8 +9,8 @@ import SwiftUI
 
 struct StartGameView: View {
     
-    var pinkColor:UIColor = UIColor(red: 255/255.0,green: 156/255.0, blue: 156/255.0, alpha: 1)
-    var greenColor: UIColor = UIColor(red: 168/255.0, green: 237/255.0, blue: 219/255.0, alpha: 1)
+    var pinkColor:Color = Color(red: 255/255.0,green: 156/255.0, blue: 156/255.0)
+    var greenColor: Color = Color(red: 168/255.0, green: 237/255.0, blue: 219/255.0)
     
     
     var body: some View {
@@ -62,11 +62,11 @@ struct StartGameView: View {
     }
     
     var pinkRectangle: some View {
-        Rectangle().foregroundColor(Color(pinkColor))
+        Rectangle().foregroundColor(pinkColor)
     }
     
     var greenRectangle: some View {
-        Rectangle().foregroundColor(Color(greenColor))
+        Rectangle().foregroundColor(greenColor)
     }
 }
 
