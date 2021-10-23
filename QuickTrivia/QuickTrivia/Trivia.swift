@@ -45,6 +45,8 @@ struct TriviaGame {
             for i in 0..<triviaData.count {
                 
                 triviaData[i].question = triviaData[i].question.replacingOccurrences(of: "&quot;", with: "'")
+                triviaData[i].question = triviaData[i].question.replacingOccurrences(of: "&ldquo;;", with: "'")
+
                 triviaData[i].question = triviaData[i].question.replacingOccurrences(of: "&#039;", with: "'");
                 triviaData[i].question = triviaData[i].question.replacingOccurrences(of: "&tilde;", with: "ã")
                 
@@ -58,6 +60,8 @@ struct TriviaGame {
                 
                 trivias.append(Trivia(id: i, category: triviaData[i].category, difficulty: triviaData[i].difficulty, question: triviaData[i].question, answerOptions: answers, correct_answer: triviaData[i].correct_answer))
             }
+            
+            print(trivias)
             
         }
     }

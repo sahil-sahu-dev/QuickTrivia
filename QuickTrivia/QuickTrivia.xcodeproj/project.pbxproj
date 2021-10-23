@@ -13,6 +13,7 @@
 		B2B3E0DB272184FB003B1C0B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2B3E0DA272184FB003B1C0B /* Preview Assets.xcassets */; };
 		B2B3E0E327218514003B1C0B /* Trivia.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B3E0E227218514003B1C0B /* Trivia.swift */; };
 		B2B3E0E5272185EC003B1C0B /* TriviaDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B3E0E4272185EC003B1C0B /* TriviaDocument.swift */; };
+		B2D1DBA62723265500D02A5A /* StartGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D1DBA52723265500D02A5A /* StartGameView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		B2B3E0DC272184FB003B1C0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2B3E0E227218514003B1C0B /* Trivia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trivia.swift; sourceTree = "<group>"; };
 		B2B3E0E4272185EC003B1C0B /* TriviaDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaDocument.swift; sourceTree = "<group>"; };
+		B2D1DBA52723265500D02A5A /* StartGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartGameView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				B2B3E0D3272184F8003B1C0B /* QuickTriviaApp.swift */,
 				B2B3E0D5272184F8003B1C0B /* TriviaQuestionsGameView.swift */,
+				B2D1DBA52723265500D02A5A /* StartGameView.swift */,
 				B2B3E0E227218514003B1C0B /* Trivia.swift */,
 				B2B3E0E4272185EC003B1C0B /* TriviaDocument.swift */,
 				B2B3E0D7272184FB003B1C0B /* Assets.xcassets */,
@@ -147,6 +150,7 @@
 				B2B3E0D6272184F8003B1C0B /* TriviaQuestionsGameView.swift in Sources */,
 				B2B3E0E5272185EC003B1C0B /* TriviaDocument.swift in Sources */,
 				B2B3E0E327218514003B1C0B /* Trivia.swift in Sources */,
+				B2D1DBA62723265500D02A5A /* StartGameView.swift in Sources */,
 				B2B3E0D4272184F8003B1C0B /* QuickTriviaApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

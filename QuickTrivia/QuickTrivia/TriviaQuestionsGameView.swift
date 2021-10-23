@@ -11,47 +11,73 @@ import SwiftUI
 
 struct TriviaQuestionsGameView: View {
     
-    
     @ObservedObject var triviaDocument: TriviaQuestionsGame
-    
+    var questionIndex: Int = 0
     
     var body: some View {
+                
+                ZStack{
+                    
+                    VStack{
+                     Text("Question")
+                        withAnimation{
+                            question
+                                .padding()
+                                .foregroundColor(.white)
+                                .font(.headline)
+                        }
+                        
+                        Text("Answer")
+                        if(triviaDocument.trivias.count > questionIndex){
+                            answers
+                                .padding()
+                                .foregroundColor(.white)
+                                .font(.headline)
+                        }
+                    }
+                    
+                    
+                }
         
-        NavigationView{
+    }
+    
+    var question: some View {
         
-            List(triviaDocument.trivias){ item in
-            
-                VStack{
-                    Text("Question: " + item.question)
-                    Spacer()
-                    Text("Category: " + item.category)
-                    showAnswerOptions(for: item)
-                    Spacer()
-                    Text("Answer: " + item.correct_answer)
-               
+            if(triviaDocument.trivias.count > questionIndex){
+                return Text(triviaDocument.trivias[questionIndex].question)
+                
+            }
+        
+        
+        return Text("")
+    }
+    
+//    var blueRectangle: some View {
+//
+//
+//    }
+    
+    var answers: some View {
+        
+        
+        return VStack{
+            Text(triviaDocument.trivias[questionIndex].answerOptions[0])
+            Text(triviaDocument.trivias[questionIndex].answerOptions[1])
+                    
+            if(triviaDocument.trivias[questionIndex].answerOptions.count == 4){
+                Text(triviaDocument.trivias[questionIndex].answerOptions[2])
+                Text(triviaDocument.trivias[questionIndex].answerOptions[3])
             }
         }
-                
-        .navigationBarTitle("QuickTrivia")
         
     }
         
-}
-    
-    @ViewBuilder
-    func showAnswerOptions(for item: Trivia) -> some View{
-
-        ForEach(item.answerOptions, id: \.self) { question in
-            Text(question)
-        }
-    }
-  
-    
     
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         TriviaQuestionsGameView(triviaDocument: TriviaQuestionsGame())
+            
     }
 }
