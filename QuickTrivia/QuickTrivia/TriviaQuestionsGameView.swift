@@ -12,18 +12,33 @@ import SwiftUI
 struct TriviaQuestionsGameView: View {
     
     @ObservedObject var triviaDocument: TriviaQuestionsGame
-    var questionIndex: Int = 0
+    
+    @State var questionIndex: Int = 0
+    
+    
     var pinkColor:Color = Color(red: 255/255.0,green: 156/255.0, blue: 156/255.0)
     var greenColor: Color = Color(red: 168/255.0, green: 237/255.0, blue: 219/255.0)
+    @State var hasTappedOption = false
     
     var body: some View {
-
-        VStack{
-    
-            Text(questionIndex < triviaDocument.trivias.count ? triviaDocument.trivias[questionIndex].question : "").offset(y: -150)
-            blackLine.offset(y: -100)
-            answers
+        
+        NavigationView{
+            VStack{
+        
+                Text(questionIndex < triviaDocument.trivias.count ? triviaDocument.trivias[questionIndex].question : "").offset(y: -150)
+                blackLine.offset(y:-50)
+                answers
+            }
+            
         }
+        
+        .toolbar {
+            ToolbarItem{
+                nextQuestion
+            }
+        }
+            
+        
             
         
     }
@@ -36,6 +51,13 @@ struct TriviaQuestionsGameView: View {
             }
         
         return Text("")
+    }
+    
+    var nextQuestion: some View {
+        Button("Next Question") {
+            questionIndex += 1
+            hasTappedOption = false
+        }.foregroundColor(.black)
     }
     
     var blackLine: some View {
@@ -52,11 +74,19 @@ struct TriviaQuestionsGameView: View {
             if(triviaDocument.trivias.count > questionIndex){
                 ForEach(triviaDocument.trivias[questionIndex].answerOptions, id: \.self){answer in
                     ZStack{
-                        option
-                            .foregroundColor(answer.elementsEqual(triviaDocument.trivias[questionIndex].correct_answer) ? greenColor : pinkColor)
+                        withAnimation(){
+                            option
+                        }
+                                .onTapGesture {
+                                    hasTappedOption = true
+                                    answer.elementsEqual(triviaDocument.trivias[questionIndex].correct_answer) ? HapticsManager.instance.notification(of: .success) : HapticsManager.instance.notification(of: .error)
+                                }
+                        .foregroundColor(hasTappedOption && answer.elementsEqual(triviaDocument.trivias[questionIndex].correct_answer) ? greenColor : pinkColor)
+                            
+                        Text(answer).foregroundColor(hasTappedOption && answer.elementsEqual(triviaDocument.trivias[questionIndex].correct_answer) ? .black : .white)
                         
-                        Text(answer).foregroundColor(.black)
                     }
+                    .foregroundColor(.black)
                 }
             }
             //option

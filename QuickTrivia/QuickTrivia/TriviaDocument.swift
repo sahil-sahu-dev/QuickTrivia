@@ -20,7 +20,7 @@ class TriviaQuestionsGame: ObservableObject {
     
     public func loadData() {
 
-        guard let url = URL(string: "https://opentdb.com/api.php?amount=10&category=9") else{
+        guard let url = URL(string: "https://opentdb.com/api.php?amount=30") else{
             print("Error creating url object")
             return
         }
