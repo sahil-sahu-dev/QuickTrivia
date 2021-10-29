@@ -9,30 +9,34 @@ import SwiftUI
 
 struct StartGameView: View {
     
-    var pinkColor:Color = Color(red: 255/255.0,green: 156/255.0, blue: 156/255.0)
-    var greenColor: Color = Color(red: 168/255.0, green: 237/255.0, blue: 219/255.0)
+    var yellowColor:Color = Color(red: 255/255.0,green: 235/255.0, blue: 161/255.0)
+    var greenColor: Color = Color(red: 149/255.0, green: 218/255.0, blue: 193/255.0)
+    
+    var blackColor: Color = Color(red: 54/255.0, green: 54/255.0, blue: 54/255.0)
+    
     
     
     var body: some View {
         
         NavigationView{
             ZStack{
-                Color(.black)
-                VStack{
-                    greenRectangle
-                    pinkRectangle
-                }
-                title.padding()
+                
+                yellowColor
+                
+                title
+                    .padding()
+                    .offset(y:30)
                 
                 NavigationLink(destination: TriviaQuestionsGameView(triviaDocument: TriviaQuestionsGame())){
                     startButton
-                        .foregroundColor(.black)
+                        .foregroundColor(blackColor)
                         .padding()
                     
                 }
                 
             }
-            .ignoresSafeArea(.all)
+            .edgesIgnoringSafeArea(.bottom)
+            .edgesIgnoringSafeArea(.top)
             
         }
     }
@@ -55,26 +59,15 @@ struct StartGameView: View {
     var title: some View {
 
         Text("QuickTrivia 🧠")
-            .foregroundColor(.black)
+            .foregroundColor(blackColor)
             .font(.largeTitle)
             .fontWeight(.bold)
             .offset(x: 5,y:-280)
     }
     
-    var pinkRectangle: some View {
-        Rectangle().foregroundColor(pinkColor)
-    }
     
-    var greenRectangle: some View {
-        Rectangle().foregroundColor(greenColor)
-    }
 }
 
-struct testView: View {
-    var body: some View{
-        Text("Hello")
-    }
-}
 
 struct StartGameView_Previews: PreviewProvider {
     static var previews: some View {
