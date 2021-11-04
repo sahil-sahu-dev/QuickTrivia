@@ -51,6 +51,30 @@ class TriviaQuestionsGame: ObservableObject {
             
     }
     
+    public func loadNewCategory(for category: String) {
+        guard let url = URL(string: "https://opentdb.com/api.php?amount=30" + "&category=" + category) else{
+            print("Error creating url object")
+            return
+        }
+        
+        let request = URLRequest(url: url)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            if let decodedResponse = try? JSONDecoder().decode(Response.self, from: data!) {
+                
+                DispatchQueue.main.async {[self] in
+                    
+                    triviaGame.triviaData = decodedResponse.results
+                    print(triviaGame.trivias)
+                    
+                }
+            }
+            
+        }
+        
+    }
+    
     
     init() {
         

@@ -22,17 +22,18 @@ struct StartGameView: View {
             ZStack{
                 
                 yellowColor
-                
                 title
                     .padding()
                     .offset(y:30)
                 
-                NavigationLink(destination: TriviaQuestionsGameView(triviaDocument: TriviaQuestionsGame())){
+                NavigationLink(destination: TriviaQuestionsGameView()){
                     startButton
                         .foregroundColor(blackColor)
                         .padding()
+                        .offset(y:50)
                     
                 }
+                .environmentObject(TriviaQuestionsGame())
                 
             }
             .edgesIgnoringSafeArea(.bottom)
