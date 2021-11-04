@@ -12,7 +12,7 @@ class TriviaQuestionsGame: ObservableObject {
     @Published var triviaGame: TriviaGame
     
     var trivias: Array<Trivia> {
-        triviaGame.trivias
+        TriviaGame.trivias
     }
     
     
@@ -33,10 +33,10 @@ class TriviaQuestionsGame: ObservableObject {
             if let data = data {
                 if let decodedResponse = try? JSONDecoder().decode(Response.self, from: data) {
                     // we have good data – go back to the main thread
-                    DispatchQueue.main.async { [self] in
+                    DispatchQueue.main.async {
                             
-                        triviaGame.triviaData = decodedResponse.results
-                        print(triviaGame.trivias)
+                        TriviaGame.updateTriviaData(newTriviaData: decodedResponse.results)
+                        print(TriviaGame.trivias)
 
                     }
                         
@@ -52,26 +52,38 @@ class TriviaQuestionsGame: ObservableObject {
     }
     
     public func loadNewCategory(for category: String) {
-        guard let url = URL(string: "https://opentdb.com/api.php?amount=30" + "&category=" + category) else{
+        
+        self.triviaGame.updateLoadingStatus()
+        
+        let categories = ["General Knowledge": 9, "Geography" : 22, "History": 23, "Sports": 21, "Science & Nature": 17]
+        
+        guard let url = URL(string: "https://opentdb.com/api.php?amount=30" + "&category=" + String(categories[category]!)) else{
             print("Error creating url object")
             return
         }
         
         let request = URLRequest(url: url)
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
             
-            if let decodedResponse = try? JSONDecoder().decode(Response.self, from: data!) {
+        URLSession.shared.dataTask(with: request) { data, response, error in
                 
-                DispatchQueue.main.async {[self] in
-                    
-                    triviaGame.triviaData = decodedResponse.results
-                    print(triviaGame.trivias)
-                    
+            if let data = data {
+                if let decodedResponse = try? JSONDecoder().decode(Response.self, from: data) {
+                    // we have good data – go back to the main thread
+                    DispatchQueue.main.async {
+                        TriviaGame.updateTriviaData(newTriviaData: decodedResponse.results)
+                        self.triviaGame.updateLoadingStatus()
+                        print(TriviaGame.trivias)
+
+                    }
+                        
+                    return
                 }
             }
-            
-        }
+
+            // if we're still here it means there was a problem
+            print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
+                
+        }.resume()
         
     }
     
@@ -79,7 +91,12 @@ class TriviaQuestionsGame: ObservableObject {
     init() {
         
         triviaGame = TriviaGame()
-        loadData()
+        //loadData()
+    }
+    
+    
+    public func isLoading() -> Bool {
+        triviaGame.isLoading
     }
     
     
