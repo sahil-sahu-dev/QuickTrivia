@@ -17,8 +17,8 @@ struct TriviaQuestionsGameView: View {
     @State var questionIndex: Int = 0
     @State var hasTappedOption = false
     @State var tappedAnswer: String = ""
-    @State var wrongAnswer: Int = 0
     @State var currentScore: Int = 0
+    
     
     var pinkColor:Color = Color(red: 255/255.0,green: 156/255.0, blue: 156/255.0)
     var yellowColor:Color = Color(red: 255/255.0,green: 235/255.0, blue: 161/255.0)
@@ -31,52 +31,54 @@ struct TriviaQuestionsGameView: View {
         
         ZStack{
             yellowColor
-                
-            VStack{
-                
-                questionView
-                    .padding()
-                scoreView
-                answersView
-                    .padding()
-                
-                answerEmojiView
-                    .opacity(hasTappedOption ? 1 : 0)
-                    .font(.subheadline)
-                    
+            if(triviaDocument.isLoading()) {
+                ProgressView().foregroundColor(.black)
             }
+            else{
+                triviaView
+            }
+                
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: home.padding(), trailing: toggleQuestion.padding())
+        .navigationBarItems(trailing: toggleQuestion.padding())
         .edgesIgnoringSafeArea(.top)
         .edgesIgnoringSafeArea(.bottom)
         
         
     }
     
+    var triviaView: some View {
+        VStack{
+            
+            questionView
+                .padding()
+            scoreView
+            answersView
+                .padding()
+            
+            Text("\(answerEmojiView) \(answerEmojiView.elementsEqual("Correct Answer!") ? successEmojis[ Int.random(in: 0..<3)] : failureEmojis[ Int.random(in: 0..<3)])")
+                .opacity(hasTappedOption ? 1 : 0)
+                .font(.subheadline)
+                .foregroundColor(answerEmojiView.elementsEqual("Correct Answer!") ? .init(red: 0, green: 156/255, blue: 23/255) : .red)
+                
+        }
+    }
     
-    var answerEmojiView: some View {
+    
+    var answerEmojiView: String {
         
         if questionIndex < triviaDocument.trivias.count && tappedAnswer.elementsEqual(triviaDocument.trivias[questionIndex].correct_answer) {
-            return Text("Correct Answer! \(successEmojis[ Int.random(in: 0..<3)])").foregroundColor(.init(red: 0, green: 156/255, blue: 23/255))
+            
+            return "Correct Answer!"
         }
         
-        return Text("Wrong answer \(failureEmojis[ Int.random(in: 0..<3)])").foregroundColor(.red)
+       
+        return "Wrong Answer \(failureEmojis[ Int.random(in: 0..<3)])"
         
     }
     
     var scoreView: some View {
         Text("Score: \(currentScore)")
             .font(.subheadline)
-    }
-    
-    var home : some View {
-        Button(action: {
-            self.mode.wrappedValue.dismiss()
-        }) {
-            Image(systemName: "house").foregroundColor(blackColor)
-        }
-        
     }
     
     
@@ -111,7 +113,6 @@ struct TriviaQuestionsGameView: View {
             questionIndex += 1
             hasTappedOption = false
             tappedAnswer = ""
-            wrongAnswer = 0
         }
         .opacity(questionIndex < triviaDocument.trivias.count ? 1 : 0)
         .foregroundColor(blackColor)
@@ -132,34 +133,14 @@ struct TriviaQuestionsGameView: View {
                 ForEach(triviaDocument.trivias[questionIndex].answerOptions, id: \.self){answer in
                     ZStack{
                         
-                        option
-                            .onTapGesture {
-                                //haptic feedback and changing state variable for the tapped options
-                                tappedAnswer = hasTappedOption ? tappedAnswer : answer
-                                hasTappedOption = true
-                                withAnimation(.default) {
-                                    wrongAnswer = !answer.elementsEqual(triviaDocument.trivias[questionIndex].correct_answer)
-                                        && answer.elementsEqual(tappedAnswer) ? wrongAnswer+1 : wrongAnswer
-                                    
-                                }
-                                
-                                
-                                answer.elementsEqual(triviaDocument.trivias[questionIndex].correct_answer) ? HapticsManager.instance.notification(of: .success) : HapticsManager.instance.notification(of: .error)
-                                currentScore = answer.elementsEqual(triviaDocument.trivias[questionIndex].correct_answer) ? currentScore
-                                    + 1 : currentScore > 1 ? currentScore - 1 : currentScore
-                            }
-                            
-                        
+                        RoundedRectangle(cornerRadius: 15)
+                            .frame(minWidth: 120, maxWidth: 300, minHeight: 70)
+                            //.aspectRatio(1/5, contentMode: .fit)
                         
                         .foregroundColor(!hasTappedOption ?
                                             blackColor : answer.elementsEqual(triviaDocument.trivias[questionIndex].correct_answer) ?
                                             greenColor :  tappedAnswer.elementsEqual(answer)
                                             ? pinkColor : blackColor)
-                            .animation(.easeIn(duration: 0.1))
-                        
-                        
-                       // .modifier(tappedAnswer.elementsEqual(answer) && !tappedAnswer.elementsEqual(triviaDocument.trivias[questionIndex].correct_answer)
-                                   // ? Shake(animatableData: CGFloat(wrongAnswer)) : Shake(animatableData: 0))
                         
                         
                         Text(answer)
@@ -179,17 +160,24 @@ struct TriviaQuestionsGameView: View {
                             .offset(x: 120)
                         
                     }
+                    .onTapGesture {
+                        //haptic feedback and changing state variable for the tapped options
+                        
+                        tappedAnswer = hasTappedOption ? tappedAnswer : answer
+                        
+                        currentScore = answer.elementsEqual(triviaDocument.trivias[questionIndex].correct_answer) && !hasTappedOption ? currentScore
+                            + 1 : currentScore
+                        
+                        hasTappedOption = true
+                      
+                        answer.elementsEqual(triviaDocument.trivias[questionIndex].correct_answer) ? HapticsManager.instance.notification(of: .success) : HapticsManager.instance.notification(of: .error)
+                        
+                    }
                     .foregroundColor(blackColor)
                 }
             }
             
         }
-    }
-    
-    
-    var option: some View {
-        RoundedRectangle(cornerRadius: 15)
-            .frame(minWidth: 120, maxWidth: 300, minHeight: 70)
     }
     
     var checkMark: some View {
@@ -204,17 +192,5 @@ struct TriviaQuestionsGameView: View {
     
 }
 
-
-struct Shake: GeometryEffect {
-    var amount: CGFloat = 10
-    var shakesPerUnit = 3
-    var animatableData: CGFloat
-
-    func effectValue(size: CGSize) -> ProjectionTransform {
-        ProjectionTransform(CGAffineTransform(translationX:
-            amount * sin(animatableData * .pi * CGFloat(shakesPerUnit)),
-            y: 0))
-    }
-}
 
 
