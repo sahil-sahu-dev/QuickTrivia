@@ -40,7 +40,6 @@ struct CategoriesChoiceView: View {
                             }.simultaneousGesture(TapGesture().onEnded {
                                 self.triviaDocument.loadNewCategory(for: category)
                             })
-                       
                         }
                     }
                 }
