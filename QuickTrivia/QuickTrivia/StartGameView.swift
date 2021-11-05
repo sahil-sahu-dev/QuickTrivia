@@ -26,20 +26,23 @@ struct StartGameView: View {
                     .padding()
                     .offset(y:30)
                 
-                NavigationLink(destination: TriviaQuestionsGameView()){
+                NavigationLink(destination: CategoriesChoiceView()
+                                .navigationBarTitle("Categories")
+                                
+                ){
                     startButton
                         .foregroundColor(blackColor)
                         .padding()
                         .offset(y:50)
                     
                 }
-                .environmentObject(TriviaQuestionsGame())
+                
                 
             }
             .edgesIgnoringSafeArea(.bottom)
             .edgesIgnoringSafeArea(.top)
             
-        }
+        }.accentColor(.black)
     }
     
     
