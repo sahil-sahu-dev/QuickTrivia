@@ -12,12 +12,16 @@ import SwiftUI
 struct TriviaQuestionsGameView: View {
     
     @EnvironmentObject var triviaDocument: TriviaQuestionsGame
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     @State var questionIndex: Int = 0
     @State var hasTappedOption = false
     @State var tappedAnswer: String = ""
     @State var currentScore: Int = 0
+    @State var timeRemaining = 30
+    @State var showingAlert = false
+    
+    var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
     
     
     var pinkColor:Color = Color(red: 255/255.0,green: 156/255.0, blue: 156/255.0)
@@ -34,15 +38,73 @@ struct TriviaQuestionsGameView: View {
             if(triviaDocument.isLoading()) {
                 ProgressView().foregroundColor(.black)
             }
-            else{
-                triviaView
+            else if questionIndex<triviaDocument.trivias.count && timeRemaining > 0 {
+                VStack{
+                    triviaView
+                    Text("Time remaining \(Int(timeRemaining))")
+                        .bold()
+                        .padding()
+                        
+                }
+                
+            }
+            
+            else if questionIndex>=triviaDocument.trivias.count{
+                finalScoreView
             }
                 
         }
-        .navigationBarItems(trailing: toggleQuestion.padding())
+        
+        .alert(isPresented: $showingAlert) {
+            
+                Alert(
+                    title: Text("Time Over!"),
+                    message: Text("You must select an option within 30 seconds"),
+                    dismissButton : .default(Text("Next Question")) {
+                        nextQuestion()
+                    }
+                )
+            
+            }
+        
+        .onReceive(timer) {time in
+            if(!hasTappedOption && timeRemaining > 0) {
+                timeRemaining -= 1
+            }
+            else{
+                showingAlert = true
+            }
+            
+        }
+        
+        .toolbar {
+            
+            ToolbarItem(placement: .principal) {
+                scoreView
+            }
+
+            ToolbarItem(placement: .navigationBarTrailing) {
+                toggleQuestion.padding()
+            }
+            
+        }
         .edgesIgnoringSafeArea(.top)
         .edgesIgnoringSafeArea(.bottom)
         
+        
+    }
+    
+    func nextQuestion() {
+        timeRemaining = 30
+        questionIndex += 1
+        hasTappedOption = false
+        showingAlert = false
+        tappedAnswer = ""
+    }
+    
+    
+    var finalScoreView: some View {
+        Text("Final score is: \(currentScore)/\(triviaDocument.trivias.count)")
         
     }
     
@@ -51,7 +113,6 @@ struct TriviaQuestionsGameView: View {
             
             questionView
                 .padding()
-            scoreView
             answersView
                 .padding()
             
@@ -72,26 +133,29 @@ struct TriviaQuestionsGameView: View {
         }
         
        
-        return "Wrong Answer \(failureEmojis[ Int.random(in: 0..<3)])"
+        return "Wrong Answer"
         
     }
     
     var scoreView: some View {
         Text("Score: \(currentScore)")
             .font(.subheadline)
+            .bold()
     }
     
     
     var questionView: some View {
         ZStack{
             RoundedRectangle(cornerRadius: 15)
-                .frame(maxWidth: 320, maxHeight: 100)
+                .frame(maxWidth: 300, maxHeight: 90)
                 .foregroundColor(yellowColor)
 
             question
                 .foregroundColor(blackColor)
-                .frame(maxWidth: 320)
-                .font(.title2)
+                .frame(maxWidth: 300)
+                .font(.title3)
+                .offset(y: 20)
+                
             
         }
     }
@@ -99,7 +163,7 @@ struct TriviaQuestionsGameView: View {
     var question: some View {
         
         if(triviaDocument.trivias.count > questionIndex){
-            return Text(triviaDocument.trivias[questionIndex].question)
+            return Text("\(questionIndex+1). \(triviaDocument.trivias[questionIndex].question)")
                 
         }
         
@@ -110,21 +174,15 @@ struct TriviaQuestionsGameView: View {
     var toggleQuestion: some View {
        
         Button("Next") {
+            timeRemaining = 30
             questionIndex += 1
             hasTappedOption = false
+            showingAlert = false
             tappedAnswer = ""
         }
-        .opacity(questionIndex < triviaDocument.trivias.count ? 1 : 0)
-        .foregroundColor(blackColor)
+        .foregroundColor(.black)
     }
     
-    var blackLine: some View {
-        Rectangle()
-            .stroke(lineWidth: 5)
-            .frame(width:500, height: 1)
-            .foregroundColor(.black)
-
-    }
     
     var answersView: some View {
         
@@ -152,12 +210,12 @@ struct TriviaQuestionsGameView: View {
                         checkMark
                             .padding()
                             .opacity(hasTappedOption && answer.elementsEqual(triviaDocument.trivias[questionIndex].correct_answer) ? 1 : 0)
-                            .offset(x: 120)
+                            .offset(x: 130)
                         
                         xMark
                             .padding()
                             .opacity(hasTappedOption && !answer.elementsEqual(triviaDocument.trivias[questionIndex].correct_answer) ? 1 : 0)
-                            .offset(x: 120)
+                            .offset(x: 130)
                         
                     }
                     .onTapGesture {
