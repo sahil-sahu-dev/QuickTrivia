@@ -27,4 +27,4 @@ https://user-images.githubusercontent.com/80636783/140599345-e91525e0-db1c-4169-
 * Add alert if user is not connected to the internet.
 * Improve the UI of the application, make it look more lively- possibly by adding more pastel colours.
 * Add feature to 'Star' a question that users can view later on.
-* Add splash page
+* Add splash screen
