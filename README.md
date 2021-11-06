@@ -15,8 +15,10 @@ https://user-images.githubusercontent.com/80636783/140599345-e91525e0-db1c-4169-
 <img width="234" alt="Screenshot 2021-11-06 at 10 53 29 AM" src="https://user-images.githubusercontent.com/80636783/140599028-0b134a15-1b0e-4cdb-9e79-70f6c92a8620.png">
 
 # Skills learnt/used
-Learned how to make API calls over the internet, learned to use the Codable protocol, learned how to make timers. 
-Used MVVM architecture, SwiftUI and Swift5 
+* Learned how to make API calls over the internet, get and use JSON data
+* Learned to use the Codable protocol
+* Learned how to make timers. 
+* Used MVVM architecture, SwiftUI and Swift5 
 
 # Roadmap
 * Improve the Game Over view. 
