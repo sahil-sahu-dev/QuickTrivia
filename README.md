@@ -7,7 +7,8 @@ QuickTrivia is a Trivia game. Used [Open Trivia DB](https://opentdb.com/api_conf
 <img width="239" alt="Screenshot 2021-11-06 at 10 51 27 AM" src="https://user-images.githubusercontent.com/80636783/140598995-41a316c5-9917-4f5c-a9e6-8993a4a00950.png">
 
 
-[](https://user-images.githubusercontent.com/80636783/140598638-89f3afda-fe41-4aa7-ba58-08b03399b413.mp4)
+https://user-images.githubusercontent.com/80636783/140599345-e91525e0-db1c-4169-b8f5-988285679c69.mp4
+
 
 <img width="234" alt="Screenshot 2021-11-06 at 10 52 46 AM" src="https://user-images.githubusercontent.com/80636783/140599013-0a47a7f1-21ab-43dd-8e6a-fb904473641d.png">
 
