@@ -6,15 +6,16 @@ QuickTrivia is a Trivia game. Through making this application I learnt how to ma
 
 
 
-![Start Game](https://user-images.githubusercontent.com/80636783/140598625-ce1efeb5-f63e-430a-abfe-2ec6239ebb40.png)
+![Start Game](https://postimg.cc/DmKmjKzn)
 
 
-![Categories](https://user-images.githubusercontent.com/80636783/140598634-fb051210-c0dd-491d-82e4-f3c9e69c6ac7.png)
-
-![Answer in 30 seconds](https://user-images.githubusercontent.com/80636783/140598657-b19c26a4-af12-4441-a578-efe131696f6d.png)
+![Categories](https://postimg.cc/rKVsTCWH)
 
 https://user-images.githubusercontent.com/80636783/140598638-89f3afda-fe41-4aa7-ba58-08b03399b413.mp4
 
-![Game Over](https://user-images.githubusercontent.com/80636783/140598640-6bd36be7-3a16-4da5-9f63-1e226c1a4bd8.png)
+![Answer in 30 seconds](https://postimg.cc/4mWdx7Qx)
+
+
+![Game Over](https://postimg.cc/MXbHgrcR)
 
 
