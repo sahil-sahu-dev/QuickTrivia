@@ -17,12 +17,3 @@ QuickTrivia is a Trivia game. Used [Open Trivia DB](https://opentdb.com/api_conf
 * Learned to use the Codable protocol
 * Learned how to make timers. 
 * Used MVVM architecture, SwiftUI and Swift5 
-
-# Roadmap
-* Improve the Game Over view. 
-* Add feature for High Score.
-* Add a circular progress bar to indicate time remaining.
-* Add alert if user is not connected to the internet.
-* Improve the UI of the application, make it look more lively- possibly by adding more pastel colours.
-* Add feature to 'Star' a question that users can view later on.
-* Add splash screen
